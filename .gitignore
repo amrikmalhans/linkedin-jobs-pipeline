@@ -1,0 +1,23 @@
+# .gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+
+# If you are using Jupyter notebook
+.ipynb_checkpoints
+
+# The directory where you're storing data
+data/
+
+# The directory where you're storing logs
+logs/
+
+# Environment directory
+env/
+venv/
+*.env
+
+# Python dist / build directory
+dist/
+build/
+
