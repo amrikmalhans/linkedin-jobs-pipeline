@@ -21,3 +21,5 @@ venv/
 dist/
 build/
 
+.vscode/
+```
