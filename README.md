@@ -1,2 +1,2 @@
-# bitcoin-richlist-pipeline
-A data pipeline to collect Bitcoin's richest wallets list data and use Redshift  &amp; Tableau for analytics. 
+# linkedin-jobs-pipeline
+A data pipeline to collect LinkedIn's job posting data to study job market better and run analysis. 
