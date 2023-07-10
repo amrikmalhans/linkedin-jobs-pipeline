@@ -4,6 +4,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
@@ -53,11 +54,14 @@ def scrapeWebpage():
             .find_element(By.CSS_SELECTOR, "span.job-search-card__location")
             .text
         )
-        date_posted = (
-            job_listings[i]
-            .find_element(By.CSS_SELECTOR, "time.job-search-card__listdate")
-            .get_attribute("datetime")
-        )
+        try:
+            date_posted = (
+                job_listings[i]
+                .find_element(By.CSS_SELECTOR, "time.job-search-card__listdate")
+                .get_attribute("datetime")
+            )
+        except NoSuchElementException:
+            date_posted = None
         job_description = driver.find_element(
             By.CSS_SELECTOR, "div.show-more-less-html__markup"
         )
@@ -88,6 +92,6 @@ def scrapeWebpage():
         )
 
         # Delay execution for a certain amount of seconds
-        time.sleep(5)  # For example, wait for 5 seconds
+        time.sleep(3)
 
     driver.quit()
