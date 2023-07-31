@@ -6,13 +6,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
-URL = os.environ["URL"]
+URL = os.getenv("URL")
 
 
 def scrapeWebpage():
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Ensure GUI is off
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(URL)
 
     # Wait for the page to load
@@ -77,9 +83,11 @@ def scrapeWebpage():
             "job_description": soup.get_text(),
         }
 
-        # Save the job listing to a json file
-        with open(os.path.join("jobs", f"job_{i}.json"), "w") as f:
-            json.dump(job, f)
+        # # Save the job listing to a json file
+        # with open(os.path.join("jobs", f"job_{i}.json"), "w") as f:
+        #     json.dump(job, f)
+        fmt = "{job_title}\n{company_name}\n{location}\n{date_posted}\n{job_description}\n\n"
+        print(fmt.format(**job))
 
         # Navigate back to the listings page to avoid the stale element reference error
         driver.back()
